@@ -98,6 +98,10 @@ If your testbench uses `$dumpfile("build/dump.vcd");` and `$dumpvars(0, tb_name)
 
 ## Screenshots & diagrams
 <img width="1536" height="1024" alt="diagram" src="https://github.com/user-attachments/assets/5de740d0-da11-4540-8e60-a7c07d221f5a" />
+<img width="1158" height="768" alt="schematic " src="https://github.com/user-attachments/assets/4bd88e98-6d66-4fb0-8958-278e3dac236b" />
+<img width="1158" height="768" alt="detailed_schematic" src="https://github.com/user-attachments/assets/7c7c826d-cde1-481b-b4ac-7f80f481b267" />
+
+
 
 
 
