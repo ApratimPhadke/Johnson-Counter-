@@ -4,15 +4,6 @@ Verilog implementation of a Johnson Counter with clear, well-documented code, se
 
 ---
 
-## Badges
-
----
-
-## Demo
-
-> Tip: put a short animated GIF or a few screenshots in `docs/` or `assets/` and reference them with relative paths so the README renders nicely on GitHub.
-
----
 
 ## Table of Contents
 
@@ -96,7 +87,7 @@ If your testbench uses `$dumpfile("build/dump.vcd");` and `$dumpvars(0, tb_name)
 
 
 ## Screenshots & diagrams
-![Uploading image.png…]()
+Images/diagram.png
 
 
 
