@@ -96,6 +96,8 @@ If your testbench uses `$dumpfile("build/dump.vcd");` and `$dumpvars(0, tb_name)
 
 
 ## Screenshots & diagrams
+![Uploading image.png…]()
+
 
 
 ## Development tips
