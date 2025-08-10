@@ -1,2 +1,228 @@
-# Johnson-Counter-
-A Johnson counter (also called a twisted ring counter) is a special type of shift register counter that cycles through 2 × n unique states using n flip-flops.      It works by shifting bits from one flip-flop to the next on each clock pulse.      The inverted output of the last flip-flop is fed back into the first flip-flop’s input.      
+# {{Johnson Counter }}
+
+Verilog implementation of a Johnson Counter with clear, well-documented code, self-checking testbenches, waveform outputs, and diagrams — perfect for learning and demonstrating digital counter design.
+
+---
+
+## Badges
+
+---
+
+## Demo
+
+> Tip: put a short animated GIF or a few screenshots in `docs/` or `assets/` and reference them with relative paths so the README renders nicely on GitHub.
+
+---
+
+## Table of Contents
+
+* [Overview](#overview)
+* [Features](#features)
+* [How it works (high level)](#how-it-works-high-level)
+* [Prerequisites](#prerequisites)
+* [Quick start / Run simulation](#quick-start--run-simulation)
+* [Directory structure](#directory-structure)
+* [Screenshots & diagrams](#screenshots--diagrams)
+* [Auto-generate image gallery](#auto-generate-image-gallery)
+* [Development tips](#development-tips)
+* [CI: run tests on push](#ci-run-tests-on-push)
+* [License & Contributing](#license--contributing)
+
+---
+
+## Overview
+
+`{{PROJECT_NAME}}` is a clean, well-documented Verilog project meant to demonstrate digital design patterns (finite state machines, shift registers, counters, testbenches and waveform analysis). Replace this paragraph with a 2–4 line description of your specific repo: what problem it solves, which modules are important, and what a new visitor should look at first.
+
+---
+
+## Features
+
+* Synthesizable Verilog modules (e.g., FSMs, sequence detectors).
+* Self-checking testbenches that generate VCD waveforms.
+* Scripts to run simulations and produce waveform files.
+* Clear directory layout and a gallery of diagrams/screenshots.
+
+---
+
+## How it works (high level)
+
+Explain the architecture in plain English. Example:
+
+* `top/` contains the top-level harness for simulation and example inputs.
+* Each Verilog module implements a single responsibility (e.g., `seq1011_detector.v` implements a Mealy FSM that detects `1011`).
+* Testbenches instantiate the modules, drive stimulus, and dump waveform files using `$dumpfile`/`$dumpvars`.
+
+If your repo is focused on a specific design (e.g., Johnson counter), add a short paragraph describing that module and link to a diagram in `docs/`.
+
+---
+
+## Prerequisites
+
+Tested on Ubuntu (Linux). You'll typically need:
+
+* `iverilog` (simulator)
+* `vvp` (comes with iverilog)
+* `gtkwave` (waveform viewer)
+* `git` and optionally `gh` (GitHub CLI) or access to GitHub web UI
+* `ffmpeg` (optional — for turning screenshots into GIFs)
+
+Install (Ubuntu):
+
+```bash
+sudo apt update
+sudo apt install -y iverilog gtkwave git ffmpeg
+```
+
+---
+
+## Quick start / Run simulation
+
+Example: simulate `johnson_counter` (replace filenames with those in your repo):
+
+```bash
+# from repo root
+# compile TB and DUT
+iverilog -o build/johnson_tb.vvp tb/johnson_tb.v src/johnson_counter.v
+# run simulation
+vvp build/johnson_tb.vvp
+# open VCD in GTKWAVE
+gtkwave build/dump.vcd
+```
+
+If your testbench uses `$dumpfile("build/dump.vcd");` and `$dumpvars(0, tb_name);` you'll get `build/dump.vcd` automatically.
+
+---
+
+## Directory structure (example)
+
+```
+/ (repo root)
+├─ src/                 # Verilog source files (.v)
+├─ tb/                  # Testbenches
+├─ build/               # simulation outputs (vvp, vcd, logs) - put in .gitignore
+├─ docs/                # diagrams, gifs, screenshots used in README
+├─ scripts/             # helper scripts (run_sim.sh, gen_readme_images.sh)
+├─ .github/workflows/   # CI workflows
+└─ README.md
+```
+
+Add a brief sentence explaining the purpose of each folder and highlight which files a newcomer should look at first (e.g., `src/seq1011.v`, `tb/seq1011_tb.v`).
+
+---
+
+## Screenshots & diagrams
+
+Place PNG/JPG/GIF files under `docs/` or `assets/` and reference them with relative paths so GitHub shows them live in README.
+
+**Examples:**
+
+```markdown
+![Top-level schematic](docs/schematic.png)
+<img src="docs/schematic.png" width="700"/>
+```
+
+**Notes:**
+
+* Use `docs/` for documentation assets; it looks neat on GitHub.
+* Use an animated GIF (`docs/demo.gif`) to show a running simulation/waveform — keep it < 2–3 MB if possible (or use Git LFS for large files).
+
+---
+
+## Auto-generate image gallery
+
+If you have many images and want to auto-insert them into README, use this helper script.
+
+Create `scripts/gen_readme_images.sh` with:
+
+```bash
+#!/usr/bin/env bash
+OUT=README.tmp
+echo "## Screenshots & Diagrams" > $OUT
+for img in $(find docs -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.gif' \) | sort); do
+  echo "\n![${img#docs/}](${img})" >> $OUT
+done
+# append rest of your base README (stored in README.base)
+cat README.base >> $OUT
+mv $OUT README.md
+```
+
+Usage: keep your README content template in `README.base`, run `scripts/gen_readme_images.sh` to inject gallery and produce `README.md`.
+
+---
+
+## Development tips
+
+* Keep simulations and build artefacts out of version control (see `.gitignore` below).
+* Include self-checking assertions in testbenches where possible (e.g., `$display` and `$finish` on failure/passed).
+* Provide small, focused testbenches per module so CI can run them fast.
+
+### Useful .gitignore (start with this)
+
+```
+# build artifacts
+/build/
+*.vvp
+*.vcd
+*.wlf
+*.log
+
+# editor files
+*.swp
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+```
+
+---
+
+## CI: run tests on push (GitHub Actions snippet)
+
+Create `.github/workflows/iverilog.yml` to run basic simulations on push:
+
+```yaml
+name: Icarus Verilog CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install -y iverilog gtkwave
+      - name: Compile & run tests
+        run: |
+          iverilog -o build/test_all.vvp tb/test_all.v src/*.v
+          vvp build/test_all.vvp
+```
+
+This ensures push/PRs run the simulation quickly and catch regressions.
+
+---
+
+## Contributing
+
+If you want to accept contributions:
+
+* Add `CONTRIBUTING.md` describing the development workflow.
+* Use small PRs; include testbench changes and waveform examples.
+
+---
+
+## License
+
+Choose a license and add a `LICENSE` file (e.g., MIT). Example badge shown at top.
+
+---
+
+## Contact / Support
+
+If you want help or a custom README made from your actual directory tree, paste the output of `tree -a -I 'build|sim'` (or `ls -R`) and I will generate a tailored README for you.
+
+---
+
+*Template generated by ChatGPT — customize the placeholders ****`{{PROJECT_NAME}}`**** and examples to match your repo.*
