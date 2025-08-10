@@ -36,17 +36,27 @@ Verilog implementation of a Johnson Counter with clear, well-documented code, se
 
 ---
 
-## How it works (high level)
+## How it works 
+Johnson Counter
+A Johnson counter (also called a twisted ring counter) is a special type of shift register counter that cycles through 2 × n unique states using n flip-flops.
 
-Explain the architecture in plain English. Example:
+    It works by shifting bits from one flip-flop to the next on each clock pulse.
 
-* `top/` contains the top-level harness for simulation and example inputs.
-* Each Verilog module implements a single responsibility (e.g., `seq1011_detector.v` implements a Mealy FSM that detects `1011`).
-* Testbenches instantiate the modules, drive stimulus, and dump waveform files using `$dumpfile`/`$dumpvars`.
+    The inverted output of the last flip-flop is fed back into the first flip-flop’s input.
 
-If your repo is focused on a specific design (e.g., Johnson counter), add a short paragraph describing that module and link to a diagram in `docs/`.
+    This feedback pattern produces a predictable sequence of bit patterns that can be used for counting, timing, or generating control signals.
 
----
+For example, a 4-bit Johnson counter cycles like this:
+
+0000 → 1000 → 1100 → 1110 → 1111 → 0111 → 0011 → 0001 → (repeats)
+
+Johnson counters are often used in:
+
+    LED chasing light patterns
+
+    Timing signal generation
+
+    Simple digital frequency dividers
 
 ## Prerequisites
 
@@ -87,7 +97,8 @@ If your testbench uses `$dumpfile("build/dump.vcd");` and `$dumpvars(0, tb_name)
 
 
 ## Screenshots & diagrams
-Images/diagram.png
+<img width="1536" height="1024" alt="diagram" src="https://github.com/user-attachments/assets/5de740d0-da11-4540-8e60-a7c07d221f5a" />
+
 
 
 
