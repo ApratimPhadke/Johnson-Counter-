@@ -1,4 +1,4 @@
-# {{Johnson Counter }}
+# Johnson Counter 
 
 Verilog implementation of a Johnson Counter with clear, well-documented code, self-checking testbenches, waveform outputs, and diagrams — perfect for learning and demonstrating digital counter design.
 
@@ -32,7 +32,7 @@ Verilog implementation of a Johnson Counter with clear, well-documented code, se
 
 ## Overview
 
-`{{PROJECT_NAME}}` is a clean, well-documented Verilog project meant to demonstrate digital design patterns (finite state machines, shift registers, counters, testbenches and waveform analysis). Replace this paragraph with a 2–4 line description of your specific repo: what problem it solves, which modules are important, and what a new visitor should look at first.
+`Johnson Counter ` is a clean, well-documented Verilog project meant to demonstrate digital design patterns (finite state machines, shift registers, counters, testbenches and waveform analysis). Replace this paragraph with a 2–4 line description of your specific repo: what problem it solves, which modules are important, and what a new visitor should look at first.
 
 ---
 
@@ -94,62 +94,9 @@ If your testbench uses `$dumpfile("build/dump.vcd");` and `$dumpvars(0, tb_name)
 
 ---
 
-## Directory structure (example)
-
-```
-/ (repo root)
-├─ src/                 # Verilog source files (.v)
-├─ tb/                  # Testbenches
-├─ build/               # simulation outputs (vvp, vcd, logs) - put in .gitignore
-├─ docs/                # diagrams, gifs, screenshots used in README
-├─ scripts/             # helper scripts (run_sim.sh, gen_readme_images.sh)
-├─ .github/workflows/   # CI workflows
-└─ README.md
-```
-
-Add a brief sentence explaining the purpose of each folder and highlight which files a newcomer should look at first (e.g., `src/seq1011.v`, `tb/seq1011_tb.v`).
-
----
 
 ## Screenshots & diagrams
 
-Place PNG/JPG/GIF files under `docs/` or `assets/` and reference them with relative paths so GitHub shows them live in README.
-
-**Examples:**
-
-```markdown
-![Top-level schematic](docs/schematic.png)
-<img src="docs/schematic.png" width="700"/>
-```
-
-**Notes:**
-
-* Use `docs/` for documentation assets; it looks neat on GitHub.
-* Use an animated GIF (`docs/demo.gif`) to show a running simulation/waveform — keep it < 2–3 MB if possible (or use Git LFS for large files).
-
----
-
-## Auto-generate image gallery
-
-If you have many images and want to auto-insert them into README, use this helper script.
-
-Create `scripts/gen_readme_images.sh` with:
-
-```bash
-#!/usr/bin/env bash
-OUT=README.tmp
-echo "## Screenshots & Diagrams" > $OUT
-for img in $(find docs -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.gif' \) | sort); do
-  echo "\n![${img#docs/}](${img})" >> $OUT
-done
-# append rest of your base README (stored in README.base)
-cat README.base >> $OUT
-mv $OUT README.md
-```
-
-Usage: keep your README content template in `README.base`, run `scripts/gen_readme_images.sh` to inject gallery and produce `README.md`.
-
----
 
 ## Development tips
 
